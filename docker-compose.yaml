@@ -1,1 +1,68 @@
-v
+services:
+  app:
+    build:
+      context: dockerfiles
+      dockerfile: php.Dockerfile
+    volumes:
+      - ./src:/var/www/laravel
+    environment:
+      TMPDIR: /tmp
+    container_name: php
+    networks:
+      - laravel_net
+
+  nginx:
+    image: "nginx:stable-alpine"
+    ports:
+      - "8001:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./src:/var/www/laravel 
+    depends_on:
+      - mysql
+      - app
+    container_name: nginx
+    networks:
+        - laravel_net
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3316:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - dbdata:/var/lib/mysql
+    container_name: mysql
+    networks:
+      - laravel_net
+
+  composer:
+    image: composer:latest
+    working_dir: /var/www/laravel
+    entrypoint: ["composer", "--ignore-platform-reqs"]
+    volumes:
+      - ./src:/var/www/laravel
+    networks:
+      - laravel_net
+
+
+  artisan:
+    build:
+      context: dockerfiles
+      dockerfile: php.Dockerfile
+    volumes:
+      - ./src:/var/www/laravel
+    entrypoint: ["php", "/var/www/laravel/artisan"]
+    networks:
+      - laravel_net
+
+volumes:
+  dbdata:
+
+networks:
+  laravel_net:
+    driver: bridge
