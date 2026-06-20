@@ -15,3 +15,14 @@ docker-compose run composer create-project  laravel/laravel .
 docker-compose down
 
 docker-compose up
+
+
+http://localhost:8001/ проверяем,что Ларавель стартовал
+
+для папки /src/storage даем права на изменение
+
+cd src
+sudo chmod 777 -R storage 
+
+
+sudo chmod 777 -R storage 
