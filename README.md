@@ -26,3 +26,9 @@ sudo chmod 777 -R storage
 
 
 docker-compose run --rm artisan migrate 
+
+
+даем права на изменение .env
+sudo chmod 777 .env
+
+и заменяем содержимое на значения из example.env
