@@ -26,6 +26,7 @@ yaml for fresh start
 - `sudo chmod 777 -R storage `
 
  Сбросить БД и запустить сидеры: 
+ 
  -`docker-compose run --rm artisan migrate:fresh --seed`
  
 - `docker-compose run --rm artisan migrate` 
