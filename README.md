@@ -22,9 +22,9 @@ yaml for fresh start
 для папки /src/storage даем права на изменение
 
 `cd src`
+ 
 `sudo chmod 777 -R storage `
-
-
+ 
 `docker-compose run --rm artisan migrate` 
 
 
